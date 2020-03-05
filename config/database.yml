@@ -13,7 +13,6 @@ test:
   database: peerstreet_test
 
 production:
-  url: <%= ENV["DATABASE_URL"] %>
   database: <%= ENV['PRODUCTION_DB_NAME'] %>
   username: <%= ENV['PRODUCTION_USERNAME'] %>
   password: <%= ENV['PRODUCTION_PASSWORD'] %>
