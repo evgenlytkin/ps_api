@@ -3,7 +3,7 @@
 class CreateZipCodes < ActiveRecord::Migration[6.0]
   def change
     create_table :zip_codes do |t|
-      t.integer :zip_code, null: false
+      t.string :zip_code, limit: 5, null: false
       t.timestamps
     end
 

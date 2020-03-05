@@ -3,7 +3,7 @@
 class CreateCbsas < ActiveRecord::Migration[6.0]
   def change
     create_table :cbsas do |t|
-      t.integer :cbsa, null: false
+      t.string :cbsa, limit: 5, null: false
       t.timestamps
     end
 
