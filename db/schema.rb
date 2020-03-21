@@ -17,35 +17,32 @@ ActiveRecord::Schema.define(version: 2020_03_05_162902) do
 
   create_table "cbsas", force: :cascade do |t|
     t.string "cbsa", limit: 5, null: false
+    t.integer "statistical_area_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["cbsa"], name: "index_cbsas_on_cbsa"
+    t.index ["statistical_area_id"], name: "index_cbsas_on_statistical_area_id"
   end
 
   create_table "statistical_areas", force: :cascade do |t|
-    t.integer "cbsa_id"
-    t.string "name", limit: 150, null: false
+    t.string "cbsa", limit: 5, null: false
+    t.string "mdiv", limit: 5
+    t.string "name", limit: 50, null: false
+    t.string "lsad", limit: 50, null: false
     t.integer "popestimate_2014", null: false
     t.integer "popestimate_2015", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "zip_code_cbsas", force: :cascade do |t|
-    t.integer "zip_code_id"
-    t.integer "cbsa_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cbsa"], name: "index_statistical_areas_on_cbsa"
   end
 
   create_table "zip_codes", force: :cascade do |t|
     t.string "zip_code", limit: 5, null: false
+    t.integer "cbsa_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["cbsa_id"], name: "index_zip_codes_on_cbsa_id"
     t.index ["zip_code"], name: "index_zip_codes_on_zip_code"
   end
 
-  add_foreign_key "statistical_areas", "cbsas"
-  add_foreign_key "zip_code_cbsas", "cbsas"
-  add_foreign_key "zip_code_cbsas", "zip_codes"
 end

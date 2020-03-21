@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
 class ZipCode < ApplicationRecord
-  has_many :zip_code_cbsas, dependent: :destroy
-  has_many :cbsas, through: :zip_code_cbsas
-  has_many :cbsa_statistical_areas, through: :cbsa
-  has_many :statistical_areas, through: :cbsa_statistical_areas
+  belongs_to :cbsa, optional: true
+  has_one :statistical_area, through: :cbsa
 
-  validates :zip_code, format: { with: /\A\d{5}\z/, message: 'not a valid zip_code', allow_nil: true }, presence: true
+  accepts_nested_attributes_for :cbsa
+
+  INVALID_CBSA = 99999
+
+  scope :valid_zip_codes, -> do
+    joins(:cbsa).where.not("cbsas.cbsa": INVALID_CBSA)
+  end
+
+  validates :zip_code, presence: true, format: { with: /\A\d{5}\z/ }
 end
