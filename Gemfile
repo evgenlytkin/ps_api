@@ -13,6 +13,8 @@ gem 'figaro'
 # api-related
 gem 'active_model_serializers'
 
+# specs
+gem 'factory_bot_rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
@@ -32,7 +34,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry-byebug'
   gem 'pry-rails'
