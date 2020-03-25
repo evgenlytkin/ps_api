@@ -13,15 +13,15 @@ class AssociateZipCodeToStatisticalAreaService < ServiceObject
     ActiveRecord::Base.connection.execute(
       <<~SQL
         WITH cte_result AS (
-          select cbsa
-          from statistical_areas
-          where (cbsa = '#{cbsa_value}') OR (mdiv = '#{cbsa_value}')
-          GROUP BY CBSA
+          SELECT cbsa
+          FROM statistical_areas
+          WHERE (cbsa = '#{cbsa_value}') OR (mdiv = '#{cbsa_value}')
+          GROUP BY cbsa
         )
         UPDATE cbsas SET statistical_area_id = (
           SELECT statistical_areas.id
           FROM cte_result
-          JOIN statistical_areas on statistical_areas.cbsa = cte_result.cbsa
+          JOIN statistical_areas ON statistical_areas.cbsa = cte_result.cbsa
           WHERE lsad = 'Metropolitan Statistical Area'
         )
         FROM zip_codes WHERE zip_codes.cbsa_id = cbsas.id AND zip_codes.id = #{zip_code.id}
